@@ -2,7 +2,7 @@ version: '3.7'
 services:
   mongodb:
     image: mongo:latest
-    container_name: 'mongodb'
+    container_name: 'mongodb-user-details-instance'
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 24030911
@@ -17,7 +17,6 @@ services:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
     ports:
-      - "5672:5672"
       - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: secure_chat_user
@@ -27,6 +26,18 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - secure-chat-net
+
+  authentication-service:
+    container_name: 'authentication-service'
+    image: jorji/authentication-service:0.0.1
+    ports:
+      - '9000:8080'
+    networks:
+      - secure-chat-net
+    depends_on:
+    - mongodb
+
+  user-management-service:
 
 volumes:
   mongodb_data_container:
