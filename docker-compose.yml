@@ -10,6 +10,8 @@ services:
       - "27017:27017"
     volumes:
       - mongodb_data_container:/data/db
+    networks:
+      - secure-chat-net
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -23,9 +25,15 @@ services:
     volumes:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - secure-chat-net
 
 volumes:
   mongodb_data_container:
 
   rabbitmq_data:
     driver: local
+
+networks:
+  secure-chat-net:
+    driver: bridge
