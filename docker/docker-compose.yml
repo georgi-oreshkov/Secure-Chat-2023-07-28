@@ -35,9 +35,17 @@ services:
     networks:
       - secure-chat-net
     depends_on:
-    - mongodb
+      - mongodb
 
   user-management-service:
+    container_name: 'user-management-service'
+    image: jorji/user-management-service:0.0.1
+    ports:
+      - '9001:8080'
+    networks:
+      - secure-chat-net
+    depends_on:
+      - mongodb
 
 volumes:
   mongodb_data_container:
