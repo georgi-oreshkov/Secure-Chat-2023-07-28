@@ -3,11 +3,7 @@ package com.jorji.chat.authenticationservice.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.Instant;
-import java.util.UUID;
 
 @Getter
 @Setter

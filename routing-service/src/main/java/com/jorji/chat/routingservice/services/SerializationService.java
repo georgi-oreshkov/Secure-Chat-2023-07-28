@@ -2,7 +2,6 @@ package com.jorji.chat.routingservice.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jorji.chat.routingservice.model.ChatMessage;
 import org.msgpack.jackson.dataformat.MessagePackFactory;
 import org.springframework.stereotype.Service;
 

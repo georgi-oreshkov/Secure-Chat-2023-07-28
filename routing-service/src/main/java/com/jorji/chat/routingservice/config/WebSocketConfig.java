@@ -8,13 +8,12 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-import java.util.List;
-
 @Configuration
 @EnableWebSocketMessageBroker
 @AllArgsConstructor
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     private final UUIDResolvingHandshakeInterceptor interceptor;
+
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/router")

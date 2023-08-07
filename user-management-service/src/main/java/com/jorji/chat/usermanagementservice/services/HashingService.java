@@ -33,22 +33,20 @@ public class HashingService {
     }
 
     public User.UserBuilder getUserBuilderWithPass(byte[] password) {
-        try {
-            byte[] salt = getSalt();
-            Argon2BytesGenerator generator = new Argon2BytesGenerator();
-            generator.init(this.parametersBuilder.withSalt(salt).build());
-            byte[] hash = new byte[argon2Properties.getHashLengthBytes()];
-            generator.generateBytes(password, hash);
-            return User.builder()
-                    .password(Base64.getEncoder().encodeToString(hash))
-                    .salt(Base64.getEncoder().encodeToString(salt));
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+
+        byte[] salt = getSalt();
+        Argon2BytesGenerator generator = new Argon2BytesGenerator();
+        generator.init(this.parametersBuilder.withSalt(salt).build());
+        byte[] hash = new byte[argon2Properties.getHashLengthBytes()];
+        generator.generateBytes(password, hash);
+        return User.builder()
+                .password(Base64.getEncoder().encodeToString(hash))
+                .salt(Base64.getEncoder().encodeToString(salt));
+
 
     }
 
-    private byte[] getSalt() throws NoSuchAlgorithmException {
+    private byte[] getSalt() {
 
         byte[] salt = new byte[argon2Properties.getSaltLengthBytes()];
         secureRandom.nextBytes(salt);
