@@ -1,0 +1,71 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.jorji.chat:routing-service >-------------------
+[INFO] Building routing-service 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ routing-service ---
+[INFO] Deleting /home/gosho/Projects/Java/Secure-Chat 2023-07-28/routing-service/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ routing-service ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ routing-service ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 12 source files with javac [debug release 20] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ routing-service ---
+[INFO] skip non existing resourceDirectory /home/gosho/Projects/Java/Secure-Chat 2023-07-28/routing-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ routing-service ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 1 source file with javac [debug release 20] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.0.0:test (default-test) @ routing-service ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.jorji.chat.routingservice.RoutingServiceApplicationTests
+14:36:46.138 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.jorji.chat.routingservice.RoutingServiceApplicationTests]: RoutingServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:36:46.183 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.jorji.chat.routingservice.RoutingServiceApplication for test class com.jorji.chat.routingservice.RoutingServiceApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.2)
+
+2023-08-07T14:36:46.348+03:00  INFO 35499 --- [           main] c.j.c.r.RoutingServiceApplicationTests   : Starting RoutingServiceApplicationTests using Java 20.0.2 with PID 35499 (started by gosho in /home/gosho/Projects/Java/Secure-Chat 2023-07-28/routing-service)
+2023-08-07T14:36:46.352+03:00  INFO 35499 --- [           main] c.j.c.r.RoutingServiceApplicationTests   : No active profile set, falling back to 1 default profile: "default"
+2023-08-07T14:36:47.141+03:00  INFO 35499 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2023-08-07T14:36:47.142+03:00  INFO 35499 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5df7e31b]]
+2023-08-07T14:36:47.143+03:00  INFO 35499 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2023-08-07T14:36:47.145+03:00  INFO 35499 --- [           main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [rabbitmq:5672]
+2023-08-07T14:36:47.148+03:00  INFO 35499 --- [           main] o.s.a.r.l.SimpleMessageListenerContainer : Broker not available; cannot force queue declarations during start: java.net.UnknownHostException: rabbitmq: Temporary failure in name resolution
+2023-08-07T14:36:47.152+03:00  INFO 35499 --- [ntContainer#0-1] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [rabbitmq:5672]
+2023-08-07T14:36:47.157+03:00  INFO 35499 --- [           main] c.j.c.r.RoutingServiceApplicationTests   : Started RoutingServiceApplicationTests in 0.917 seconds (process running for 1.333)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.526 s - in com.jorji.chat.routingservice.RoutingServiceApplicationTests
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ routing-service ---
+[INFO] Building jar: /home/gosho/Projects/Java/Secure-Chat 2023-07-28/routing-service/target/routing-service-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:3.1.2:repackage (repackage) @ routing-service ---
+[INFO] Replacing main artifact /home/gosho/Projects/Java/Secure-Chat 2023-07-28/routing-service/target/routing-service-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /home/gosho/Projects/Java/Secure-Chat 2023-07-28/routing-service/target/routing-service-0.0.1-SNAPSHOT.jar.original
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.535 s
+[INFO] Finished at: 2023-08-07T14:36:47+03:00
+[INFO] ------------------------------------------------------------------------

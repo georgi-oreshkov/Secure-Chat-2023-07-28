@@ -9,17 +9,27 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jorji.chat</groupId>
-	<artifactId>routing-service</artifactId>
+	<artifactId>restful-user-id-resolver-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>routing-service</name>
-	<description>routing-service</description>
+	<name>restful-user-id-resolver-service</name>
+	<description>restful-user-id-resolver-service</description>
 	<properties>
 		<java.version>20</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -32,9 +42,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
-			<version>3.1.2</version>
+			<groupId>org.msgpack</groupId>
+			<artifactId>msgpack-core</artifactId>
+			<version>0.9.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.msgpack</groupId>

@@ -39,13 +39,46 @@ services:
 
   user-management-service:
     container_name: 'user-management-service'
-    image: jorji/user-management-service:0.0.1
+    image: jorji/user-management-service
     ports:
       - '9001:8080'
     networks:
       - secure-chat-net
     depends_on:
       - mongodb
+
+  restful-user-id-resolver-service:
+    container_name: 'restful-user-id-resolver-service'
+    image: jorji/restful-user-id-resolver-service
+    ports:
+      - '9002:8080'
+    networks:
+      - secure-chat-net
+    depends_on:
+      - mongodb
+
+  amqp-user-id-resolver-service:
+    container_name: 'amqp-user-id-resolver-service'
+    image: jorji/amqp-user-id-resolver-service
+    ports:
+      - '9003:8080'
+    networks:
+      - secure-chat-net
+    depends_on:
+      - mongodb
+      - rabbitmq
+
+  routing-service:
+    container_name: 'routing-service'
+    image: jorji/routing-service
+    ports:
+      - '9004:8080'
+    networks:
+      - secure-chat-net
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - restful-user-id-resolver-service
 
 volumes:
   mongodb_data_container:
