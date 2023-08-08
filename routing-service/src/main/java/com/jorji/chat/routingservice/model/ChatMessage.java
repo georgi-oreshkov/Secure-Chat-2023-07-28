@@ -13,5 +13,4 @@ public class ChatMessage {
     private String sender;
     private String destination;
     private Instant time;
-
 }

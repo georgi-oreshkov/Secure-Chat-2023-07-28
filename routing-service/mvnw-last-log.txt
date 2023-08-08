@@ -30,8 +30,8 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running com.jorji.chat.routingservice.RoutingServiceApplicationTests
-14:36:46.138 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.jorji.chat.routingservice.RoutingServiceApplicationTests]: RoutingServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-14:36:46.183 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.jorji.chat.routingservice.RoutingServiceApplication for test class com.jorji.chat.routingservice.RoutingServiceApplicationTests
+20:10:28.361 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.jorji.chat.routingservice.RoutingServiceApplicationTests]: RoutingServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:10:28.405 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.jorji.chat.routingservice.RoutingServiceApplication for test class com.jorji.chat.routingservice.RoutingServiceApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -41,16 +41,16 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.2)
 
-2023-08-07T14:36:46.348+03:00  INFO 35499 --- [           main] c.j.c.r.RoutingServiceApplicationTests   : Starting RoutingServiceApplicationTests using Java 20.0.2 with PID 35499 (started by gosho in /home/gosho/Projects/Java/Secure-Chat 2023-07-28/routing-service)
-2023-08-07T14:36:46.352+03:00  INFO 35499 --- [           main] c.j.c.r.RoutingServiceApplicationTests   : No active profile set, falling back to 1 default profile: "default"
-2023-08-07T14:36:47.141+03:00  INFO 35499 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
-2023-08-07T14:36:47.142+03:00  INFO 35499 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5df7e31b]]
-2023-08-07T14:36:47.143+03:00  INFO 35499 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
-2023-08-07T14:36:47.145+03:00  INFO 35499 --- [           main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [rabbitmq:5672]
-2023-08-07T14:36:47.148+03:00  INFO 35499 --- [           main] o.s.a.r.l.SimpleMessageListenerContainer : Broker not available; cannot force queue declarations during start: java.net.UnknownHostException: rabbitmq: Temporary failure in name resolution
-2023-08-07T14:36:47.152+03:00  INFO 35499 --- [ntContainer#0-1] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [rabbitmq:5672]
-2023-08-07T14:36:47.157+03:00  INFO 35499 --- [           main] c.j.c.r.RoutingServiceApplicationTests   : Started RoutingServiceApplicationTests in 0.917 seconds (process running for 1.333)
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.526 s - in com.jorji.chat.routingservice.RoutingServiceApplicationTests
+2023-08-08T20:10:28.573+03:00  INFO 197919 --- [           main] c.j.c.r.RoutingServiceApplicationTests   : Starting RoutingServiceApplicationTests using Java 20.0.2 with PID 197919 (started by gosho in /home/gosho/Projects/Java/Secure-Chat 2023-07-28/routing-service)
+2023-08-08T20:10:28.574+03:00  INFO 197919 --- [           main] c.j.c.r.RoutingServiceApplicationTests   : No active profile set, falling back to 1 default profile: "default"
+2023-08-08T20:10:29.357+03:00  INFO 197919 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2023-08-08T20:10:29.359+03:00  INFO 197919 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@6d6f6860]]
+2023-08-08T20:10:29.359+03:00  INFO 197919 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2023-08-08T20:10:29.361+03:00  INFO 197919 --- [           main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [rabbitmq:5672]
+2023-08-08T20:10:29.365+03:00  INFO 197919 --- [           main] o.s.a.r.l.SimpleMessageListenerContainer : Broker not available; cannot force queue declarations during start: java.net.UnknownHostException: rabbitmq: Temporary failure in name resolution
+2023-08-08T20:10:29.369+03:00  INFO 197919 --- [ntContainer#0-1] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [rabbitmq:5672]
+2023-08-08T20:10:29.374+03:00  INFO 197919 --- [           main] c.j.c.r.RoutingServiceApplicationTests   : Started RoutingServiceApplicationTests in 0.912 seconds (process running for 1.316)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.524 s - in com.jorji.chat.routingservice.RoutingServiceApplicationTests
 [INFO] 
 [INFO] Results:
 [INFO] 
@@ -66,6 +66,6 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  3.535 s
-[INFO] Finished at: 2023-08-07T14:36:47+03:00
+[INFO] Total time:  3.683 s
+[INFO] Finished at: 2023-08-08T20:10:30+03:00
 [INFO] ------------------------------------------------------------------------
