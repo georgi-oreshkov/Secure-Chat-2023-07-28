@@ -1,8 +1,8 @@
-package com.jorji.chat.useridresolverservice.services;
+package com.jorji.chatutil.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.msgpack.jackson.dataformat.MessagePackFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -11,8 +11,8 @@ import java.io.IOException;
 public class SerializationService {
     private final ObjectMapper mapper;
 
-    public SerializationService() {
-        this.mapper = new ObjectMapper(new MessagePackFactory());
+    public SerializationService(@Qualifier("msgpack-object-mapper") ObjectMapper mapper) {
+        this.mapper = mapper;
     }
 
     public <T> byte[] serialize(T message) throws JsonProcessingException {

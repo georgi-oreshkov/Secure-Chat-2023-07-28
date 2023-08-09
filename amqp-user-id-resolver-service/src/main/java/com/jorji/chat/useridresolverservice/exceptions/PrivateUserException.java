@@ -1,4 +1,4 @@
-package com.jorji.chat.useridresolverservice.model;
+package com.jorji.chat.useridresolverservice.exceptions;
 
 public class PrivateUserException extends Exception{
     public PrivateUserException(String message) {

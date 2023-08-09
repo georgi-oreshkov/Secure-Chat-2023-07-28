@@ -18,7 +18,7 @@ public class ResolverService {
 
     public byte[] getSerializedUUIDofUser(String username) throws NoSuchElementException {
         User user = repository.getUserByUsername(username);
-        if (user == null) throw new NoSuchElementException(username + " does not exists!");
+        if (user == null) throw new NoSuchElementException(username + " does not exist!");
         try {
             return serializeUUIDToMessagePack(user.getUuid());
         } catch (IOException e) {

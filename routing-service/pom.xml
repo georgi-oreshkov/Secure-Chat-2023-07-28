@@ -41,7 +41,13 @@
 			<artifactId>jackson-dataformat-msgpack</artifactId>
 			<version>0.9.5</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.jorji.chat-util</groupId>
+            <artifactId>message-util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

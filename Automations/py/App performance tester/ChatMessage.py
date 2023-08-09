@@ -1,11 +1,13 @@
+import base64
+
 import msgpack
 from datetime import datetime
 from enum import Enum
 
 
 class MessageType(Enum):
-    CHAT = 1
-    CHAT_PRIVATE = 2
+    CHAT = 0
+    CHAT_PRIVATE = 1
 
 
 class ChatMessage:
@@ -23,9 +25,10 @@ def serialize_chat_message(chat_message):
         'content': chat_message.content,
         'sender': chat_message.sender,
         'destination': chat_message.destination,
-        'time': chat_message.time.timestamp()
+        'time': chat_message.time
     }
-    return msgpack.packb(data)
+    msg_bytes = msgpack.packb(data)
+    return base64.b64encode(msg_bytes).decode("utf-8")
 
 
 def deserialize_chat_message(data):

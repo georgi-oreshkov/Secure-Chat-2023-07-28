@@ -7,6 +7,7 @@ import time
 import uuid
 from datetime import datetime
 from json import decoder, encoder
+import threading
 
 import msgpack
 import requests
@@ -51,7 +52,6 @@ class Client:
 
     def get_uuid(self) -> uuid.UUID:
         self.op_log(f"Resolving uuid...")
-        print(self.config["user_resolution_endpoint"] + self.inst)
         req = requests.request(url=self.config["user_resolution_endpoint"] + self.inst, method="get")
         if req.status_code != 200:
             self.op_log(f"UUID resolution code: {req.status_code}")
@@ -72,7 +72,8 @@ class Client:
             header=header
         )
         client.connect()
-        client.subscribe("/direct/", self.received_message_log)
+        client.subscribe("/direct", self.received_message_log)
+        self.op_log("Connection successful.")
         return client
 
     def send_messages(self):
@@ -84,15 +85,18 @@ class Client:
             content=None
         )
 
-        message_targets = decoder.JSONDecoder().decode("clients.json")
-
+        with open("instances.json", mode="r", encoding="utf-8") as file:
+            message_targets = decoder.JSONDecoder().decode("".join(file.readlines()))
+        self.op_log(f"Sending messages to targets: {message_targets}")
         for target in message_targets:
             for i in range(self.config["message_count"]):
                 message.destination = target
                 message.content = generate_random_string(self.config["message_length"])
-                message.time = time.time()
+                message.time = int(time.time() * 1000)
                 msg_body = chatM.serialize_chat_message(message)
                 self.client.send(destination="/message/chat.send", body=msg_body)
+        self.op_log("All messages sent!")
+        time.sleep(10)
 
     def op_log(self, log: str):
         timestamp = time.time()
@@ -109,6 +113,7 @@ class Client:
         pass
 
     def received_message_log(self, frame):
+        print("Message!")
         message = chatM.deserialize_chat_message(frame.body)
         timestamp = int(time.time())
         entry = {

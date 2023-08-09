@@ -1,9 +1,11 @@
 package com.jorji.chat.useridresolverservice.amqp;
 
-import com.jorji.chat.useridresolverservice.model.ChatMessage;
-import com.jorji.chat.useridresolverservice.model.PrivateUserException;
+
+import com.jorji.chat.useridresolverservice.exceptions.PrivateUserException;
 import com.jorji.chat.useridresolverservice.services.ResolverService;
-import com.jorji.chat.useridresolverservice.services.SerializationService;
+
+import com.jorji.chatutil.model.ChatMessage;
+import com.jorji.chatutil.services.SerializationService;
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;

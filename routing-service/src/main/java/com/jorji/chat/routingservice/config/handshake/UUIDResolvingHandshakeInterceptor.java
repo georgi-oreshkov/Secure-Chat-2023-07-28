@@ -17,9 +17,7 @@ public class UUIDResolvingHandshakeInterceptor implements HandshakeInterceptor {
     public boolean beforeHandshake(ServerHttpRequest request, @NonNull ServerHttpResponse response,
                                    @NonNull WebSocketHandler wsHandler, Map<String, Object> attributes) {
         String userId = request.getHeaders().getFirst("X-User-Id");
-        Principal principal = () -> userId;
-        attributes.put("user", principal);
-
+        attributes.put("sessionId", userId);
         // Return true to allow the handshake to proceed with the Principal
         return true;
     }

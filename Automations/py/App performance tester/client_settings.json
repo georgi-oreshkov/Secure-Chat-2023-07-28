@@ -3,6 +3,7 @@
   "user_resolution_endpoint": "http://localhost:9002/api/resolve/username/",
   "router_endpoint": "ws://localhost:9004/router",
 
-  "message_count": 10,
-  "message_length": 100
+  "message_count": 1,
+  "message_length": 30,
+  "message_wait": 15
 }

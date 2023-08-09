@@ -26,7 +26,7 @@ if __name__ == "__main__":
             instance = multiprocessing.Process(target=worker, args=(instance_id, f"data/Run{formatted_time}"))
             instance_ids.append(instance_id)
             instances.append(instance)
-            file.write(encoder.JSONEncoder().encode(instance_ids))
+        file.write(encoder.JSONEncoder().encode(instance_ids))
 
     for instance in instances:
         instance.start()

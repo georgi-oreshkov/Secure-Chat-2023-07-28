@@ -1,4 +1,4 @@
-package com.jorji.chat.routingservice.model;
+package com.jorji.chatutil.model;
 
 public enum MessageType {
     CHAT,

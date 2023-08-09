@@ -42,6 +42,7 @@ class Client:
                 raise TimeoutError(f"Connection to {self.url} timed out")
 
     def _on_open(self, ws_app, *args):
+        print("CONNECTION OPENED!")
         self.opened = True
 
     def _on_close(self, ws_app, *args):
@@ -53,8 +54,10 @@ class Client:
         logging.debug(error)
 
     def _on_message(self, ws_app, message, *args):
+
         logging.debug("\n<<< " + str(message))
         frame = Frame.unmarshall_single(message)
+        print(f"FRAME Command: {frame.command}")
         _results = []
         if frame.command == "CONNECTED":
             self.connected = True
@@ -64,7 +67,7 @@ class Client:
         elif frame.command == "MESSAGE":
 
             subscription = frame.headers['subscription']
-
+            print(F"MESSAGE! -> {subscription}")
             if subscription in self.subscriptions:
                 onreceive = self.subscriptions[subscription]
                 messageID = frame.headers['message-id']

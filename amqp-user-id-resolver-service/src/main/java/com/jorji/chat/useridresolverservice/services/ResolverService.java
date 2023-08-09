@@ -1,7 +1,7 @@
 package com.jorji.chat.useridresolverservice.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jorji.chat.useridresolverservice.model.PrivateUserException;
+import com.jorji.chat.useridresolverservice.exceptions.PrivateUserException;
 import com.jorji.chat.useridresolverservice.model.User;
 import com.jorji.chat.useridresolverservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
