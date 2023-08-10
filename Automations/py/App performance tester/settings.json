@@ -1,0 +1,9 @@
+{
+  "registration_endpoint": "http://localhost:9001/api/register",
+  "authentication_endpoint": "http://localhost:9000/api/authenticate",
+  "router_endpoint": "ws://localhost:9004/router",
+
+  "message_count": 3,
+  "message_length": 200,
+  "client_count": 20
+}

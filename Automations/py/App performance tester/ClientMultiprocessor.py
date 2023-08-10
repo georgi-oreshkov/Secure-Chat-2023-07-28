@@ -1,22 +1,22 @@
+import multiprocessing
 import os
 from datetime import datetime
 from json import decoder, encoder
-import multiprocessing
-from ChatClient import Client
+
+from ChatClient import ChatClient
 
 if __name__ == "__main__":
     def worker(task_id, path):
-        processor = Client(task_id, path)
-        processor.send_messages()
+        client = ChatClient(task_id, path)
+        client.send_messages()
 
-
-    with open("main_setting.json", mode="r", encoding="utf-8") as file:
+    with open("settings.json", mode="r", encoding="utf-8") as file:
         config = decoder.JSONDecoder().decode("".join(file.readlines()))
 
     formatted_time = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
     os.mkdir(f"data/Run{formatted_time}")
 
-    num_tasks = config["client-count"]
+    num_tasks = config["client_count"]
     instances = []
 
     with open(f"./data/Run{formatted_time}/instances.json", mode="w", encoding="utf-8") as file:

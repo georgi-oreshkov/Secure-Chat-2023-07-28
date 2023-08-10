@@ -1,46 +1,32 @@
 package com.jorji.chat.useridresolverservice.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jorji.chat.useridresolverservice.exceptions.PrivateUserException;
-import com.jorji.chat.useridresolverservice.model.User;
-import com.jorji.chat.useridresolverservice.repository.UserRepository;
+
+import com.jorji.chatutil.userutil.exceptions.PrivateUserException;
+import com.jorji.chatutil.userutil.model.FullUserModel;
+import com.jorji.chat.useridresolverservice.repositories.ResolutionUserRepository;
 import lombok.AllArgsConstructor;
-import org.msgpack.jackson.dataformat.MessagePackFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class ResolverService {
-    private final UserRepository repository;
+    private final ResolutionUserRepository repository;
 
-    public byte[] getSerializedUUIDofUser(String username) throws NoSuchElementException, PrivateUserException {
-        User user = repository.getUserByUsername(username);
+    public UUID getUUIDofUser(String username) throws NoSuchElementException, PrivateUserException {
+        FullUserModel user = repository.getUserByUsername(username);
         if (user == null) throw new NoSuchElementException(username + " does not exists!");
-        if (user.isPrv()) throw new PrivateUserException(username + " does not wish to be found!");
-        try {
-            return serializeUUIDToMessagePack(user.getUuid());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        if (user.isPrivate()) throw new PrivateUserException(username + " does not wish to be found!");
+        return user.getUuid();
     }
 
-    public byte[] getSerializedUUIDofContact(String contactId) throws NoSuchElementException {
-        User user = repository.getUserByContactId(contactId);
+    public UUID getUUIDofContact(String contactId) throws NoSuchElementException {
+        FullUserModel user = repository.getUserByContactId(contactId);
         if (user == null) throw new NoSuchElementException(contactId + " does not exists!");
-        try {
-            return serializeUUIDToMessagePack(user.getUuid());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return user.getUuid();
     }
 
-    private byte[] serializeUUIDToMessagePack(UUID uuid) throws IOException {
-        MessagePackFactory factory = new MessagePackFactory();
-        ObjectMapper objectMapper = new ObjectMapper(factory);
-        return objectMapper.writeValueAsBytes(uuid);
-    }
+
 }

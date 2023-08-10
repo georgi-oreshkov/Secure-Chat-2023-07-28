@@ -4,11 +4,12 @@
 function build_docker_image {
     local directory=$1
     local dockerfile="$directory/Dockerfile"
-    local image_tag="jorji/$directory"
+    local image_tag="gocheto8/jorji:$directory"
 
     if [[ -f "$dockerfile" ]]; then
         echo "Building Docker image for directory: $directory"
         docker build --no-cache -t "$image_tag" "$directory"
+#        docker push "$image_tag"
         echo "Docker image built with tag: $image_tag"
 
     fi

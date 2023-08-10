@@ -2,8 +2,8 @@ package com.jorji.chat.usermanagementservice.services;
 
 
 import com.jorji.chat.usermanagementservice.config.Argon2Properties;
-import com.jorji.chat.usermanagementservice.config.ContactIdProperties;
-import com.jorji.chat.usermanagementservice.model.User;
+import com.jorji.chatutil.userutil.config.ContactIdProperties;
+import com.jorji.chatutil.userutil.model.FullUserModel;
 import org.bouncycastle.crypto.generators.Argon2BytesGenerator;
 import org.bouncycastle.crypto.params.Argon2Parameters;
 import org.springframework.stereotype.Service;
@@ -32,14 +32,14 @@ public class HashingService {
         this.secureRandom = SecureRandom.getInstance("DRBG");
     }
 
-    public User.UserBuilder getUserBuilderWithPass(byte[] password) {
+    public FullUserModel.FullUserModelBuilder getUserBuilderWithPass(byte[] password) {
 
         byte[] salt = getSalt();
         Argon2BytesGenerator generator = new Argon2BytesGenerator();
         generator.init(this.parametersBuilder.withSalt(salt).build());
         byte[] hash = new byte[argon2Properties.getHashLengthBytes()];
         generator.generateBytes(password, hash);
-        return User.builder()
+        return FullUserModel.builder()
                 .password(Base64.getEncoder().encodeToString(hash))
                 .salt(Base64.getEncoder().encodeToString(salt));
 
@@ -52,7 +52,6 @@ public class HashingService {
         secureRandom.nextBytes(salt);
         return salt;
     }
-
 
     public String generateContactId() {
         StringBuilder passwordBuilder = new StringBuilder();
