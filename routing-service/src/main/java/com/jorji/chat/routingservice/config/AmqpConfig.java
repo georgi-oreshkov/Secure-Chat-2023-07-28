@@ -9,4 +9,5 @@ public class AmqpConfig {
     private String userResolutionQueueName;
     private String groupResolutionQueueName;
     private String directMessageQueueName;
+    private String contactResolutionQueueName;
 }

@@ -23,4 +23,13 @@ public class SerializationService {
         return this.mapper.readValue(bytes, valueType);
     }
 
+    public <T> boolean isValidMsg(byte[] bytes, Class<T> valueType){
+        try {
+            deserialize(bytes, valueType);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
 }

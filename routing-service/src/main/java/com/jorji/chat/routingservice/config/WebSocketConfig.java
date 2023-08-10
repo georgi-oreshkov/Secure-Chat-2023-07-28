@@ -1,29 +1,32 @@
 package com.jorji.chat.routingservice.config;
 
 import com.jorji.chat.routingservice.config.handshake.UUIDResolvingHandshakeInterceptor;
+import com.jorji.chat.routingservice.handlers.CustomBinaryWebSocketHandler;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.config.annotation.*;
+
+import java.util.AbstractMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
-@EnableWebSocketMessageBroker
+@EnableWebSocket
 @AllArgsConstructor
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+public class WebSocketConfig implements WebSocketConfigurer {
     private final UUIDResolvingHandshakeInterceptor interceptor;
+    private final CustomBinaryWebSocketHandler myHandler;
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/router")
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry.addHandler(myHandler, "/router")
                 .setAllowedOriginPatterns("*")
                 .addInterceptors(interceptor);
-
     }
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/message");
+    @Bean
+    public AbstractMap<String, WebSocketSession> getSessionMap(){
+        return new ConcurrentHashMap<>();
     }
 }
