@@ -1,0 +1,3 @@
+defmodule SecureChatClient do
+  
+end

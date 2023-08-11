@@ -12,7 +12,6 @@ import java.util.Map;
 
 @Component
 public class UUIDResolvingHandshakeInterceptor implements HandshakeInterceptor {
-
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, @NonNull ServerHttpResponse response,
                                    @NonNull WebSocketHandler wsHandler, Map<String, Object> attributes) {
@@ -21,11 +20,9 @@ public class UUIDResolvingHandshakeInterceptor implements HandshakeInterceptor {
         return true;
     }
 
-
     @Override
     public void afterHandshake(@NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response,
                                @NonNull WebSocketHandler wsHandler, Exception ex) {
         // You can perform post-processing here after the handshake is successful.
     }
-
 }
