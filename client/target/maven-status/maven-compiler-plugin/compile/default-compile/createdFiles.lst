@@ -1,0 +1,6 @@
+com/jorji/chat/client/websocket/CustomWebSocketConfigurator.class
+com/jorji/chat/client/model/ChatMessage.class
+com/jorji/chat/client/model/ChatMessageSerializer.class
+com/jorji/chat/client/websocket/SCBinaryWebsocketClient.class
+com/jorji/chat/client/model/MessageType.class
+com/jorji/chat/client/Main.class

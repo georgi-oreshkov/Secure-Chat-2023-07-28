@@ -5,6 +5,8 @@ import com.jorji.chatutil.model.ChatMessage;
 import com.jorji.chatutil.model.MessageType;
 import com.jorji.chatutil.services.SerializationService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -19,6 +21,7 @@ import java.util.AbstractMap;
 @Service
 @AllArgsConstructor
 public class RouterService {
+    private static final Logger logger = LoggerFactory.getLogger(RouterService.class);
     private final RabbitTemplate rabbitTemplate;
 
     private final SerializationService serializationService;
@@ -41,11 +44,12 @@ public class RouterService {
             case CHAT_PRIVATE -> queueName = amqpProperties.getContactResolutionQueueName();
             default -> throw new IllegalArgumentException("Message type: " + type + "is illegal.");
         }
+        logger.info("Sending message to `{}`", queueName);
         rabbitTemplate.send(queueName, amqpMessage);
     }
 
     public void scheduleDelayedMessage(byte[] message) {
-        System.out.println("A message was delayed!");
+        logger.info("A message was delayed!");
         // todo
     }
 
@@ -53,6 +57,7 @@ public class RouterService {
     public void receiveRabbitMessage(byte[] message) {
         try {
             ChatMessage chatMessage = serializationService.deserialize(message, ChatMessage.class);
+            logger.info("Msg route {} -> {}", chatMessage.getSender(), chatMessage.getDestination());
             WebSocketSession session = sessionMap.get(chatMessage.getDestination());
 
             if (session == null) {
@@ -62,8 +67,6 @@ public class RouterService {
 
             BinaryMessage binaryMessage = new BinaryMessage(message);
             session.sendMessage(binaryMessage);
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

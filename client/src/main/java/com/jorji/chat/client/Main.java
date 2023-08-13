@@ -66,8 +66,8 @@ public class Main {
                     ChatMessage chatMessage = new ChatMessage("Hello, world", instanceName, instanceName);
                     client.sendMessage(chatMessage);
                 }
-
-            } catch (IOException e) {
+                Thread.sleep(10000);
+            } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
@@ -166,7 +166,7 @@ public class Main {
                     clientConfig,
                     uri);
         } catch (DeploymentException | IOException e) {
-            logger.error(Arrays.toString(e.getStackTrace()));
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

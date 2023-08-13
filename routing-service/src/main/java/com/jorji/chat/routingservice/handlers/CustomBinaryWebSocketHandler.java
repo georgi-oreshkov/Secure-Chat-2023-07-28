@@ -25,14 +25,14 @@ public class CustomBinaryWebSocketHandler extends BinaryWebSocketHandler {
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) {
         String userId = (String) session.getAttributes().get("userId");
-        logger.trace("Connection established for " + userId);
+        logger.info("Connection established for " + userId);
         this.sessionMap.put(userId, session);
     }
 
     @Override
     protected void handleBinaryMessage(@NonNull WebSocketSession session, @NonNull BinaryMessage binMessage) throws Exception {
         String userId = (String) session.getAttributes().get("userId");
-        logger.trace("Message received from " + userId);
+        logger.info("Message received from {}", userId);
         ByteBuffer buffer = binMessage.getPayload();
         byte[] message = new byte[binMessage.getPayloadLength()];
         buffer.get(message);
@@ -48,6 +48,7 @@ public class CustomBinaryWebSocketHandler extends BinaryWebSocketHandler {
     @Override
     public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus status) {
         String userId = (String) session.getAttributes().get("userId");
+        logger.info("Connection closed for {}", userId);
         if (!sessionMap.remove(userId, session))
             throw new RuntimeException("Session " + userId + " removal failed!");
     }

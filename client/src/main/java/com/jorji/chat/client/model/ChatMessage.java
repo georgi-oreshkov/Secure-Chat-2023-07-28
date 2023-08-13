@@ -14,11 +14,11 @@ public class ChatMessage {
     private String content;
     private String sender;
     private String destination;
-    private Instant time;
+    private Long time;
 
     public String toLogString(){
         return String.format("at:%d,of-type:%s,sender:%s,content-length:%d",
-                time.toEpochMilli(),
+                time,
                 type,
                 sender,
                 content.length());
@@ -30,6 +30,6 @@ public class ChatMessage {
         this.destination = destination;
 
         this.type = MessageType.CHAT;
-        this.time = Instant.now();
+        this.time = Instant.now().toEpochMilli();
     }
 }

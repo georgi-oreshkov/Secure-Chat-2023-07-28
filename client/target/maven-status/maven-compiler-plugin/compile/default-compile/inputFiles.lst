@@ -1,0 +1,6 @@
+/home/gosho/Projects/Java/Secure-Chat 2023-07-28/client/src/main/java/com/jorji/chat/client/websocket/SCBinaryWebsocketClient.java
+/home/gosho/Projects/Java/Secure-Chat 2023-07-28/client/src/main/java/com/jorji/chat/client/model/ChatMessage.java
+/home/gosho/Projects/Java/Secure-Chat 2023-07-28/client/src/main/java/com/jorji/chat/client/Main.java
+/home/gosho/Projects/Java/Secure-Chat 2023-07-28/client/src/main/java/com/jorji/chat/client/model/MessageType.java
+/home/gosho/Projects/Java/Secure-Chat 2023-07-28/client/src/main/java/com/jorji/chat/client/websocket/CustomWebSocketConfigurator.java
+/home/gosho/Projects/Java/Secure-Chat 2023-07-28/client/src/main/java/com/jorji/chat/client/model/ChatMessageSerializer.java

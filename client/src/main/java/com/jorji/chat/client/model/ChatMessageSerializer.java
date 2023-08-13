@@ -1,40 +1,40 @@
 package com.jorji.chat.client.model;
 
-import com.jorji.chat.client.model.ChatMessage;
-import com.jorji.chat.client.model.MessageType;
-import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePack;
-import org.msgpack.core.MessageUnpacker;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.jorji.chat.client.Main;
+import org.msgpack.jackson.dataformat.MessagePackFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.time.Instant;
 
 public class ChatMessageSerializer {
+    private final ObjectMapper mapper;
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-    public static byte[] serialize(ChatMessage chatMessage) {
-        try (MessageBufferPacker packer = MessagePack.newDefaultBufferPacker()) {
-            packer.packInt(chatMessage.getType().ordinal())
-                    .packString(chatMessage.getContent())
-                    .packString(chatMessage.getSender())
-                    .packString(chatMessage.getDestination())
-                    .packLong(chatMessage.getTime().getEpochSecond());
-            return packer.toByteArray();
-        } catch (IOException e) {
+
+    public ChatMessageSerializer() {
+        ObjectMapper objectMapper = new ObjectMapper(new MessagePackFactory());
+        objectMapper.registerModule(new JavaTimeModule()); // Register JSR310 module
+        this.mapper = objectMapper;
+    }
+
+    public byte[] serialize(ChatMessage chatMessage) {
+        try {
+            return this.mapper.writeValueAsBytes(chatMessage);
+        } catch (JsonProcessingException e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-    public static ChatMessage deserialize(byte[] bytes) {
-        try (MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(bytes)) {
-            MessageType messageType = MessageType.values()[unpacker.unpackInt()];
-            String content = unpacker.unpackString();
-            String sender = unpacker.unpackString();
-            String destination = unpacker.unpackString();
-            long epochSecond = unpacker.unpackLong();
-            Instant time = Instant.ofEpochSecond(epochSecond);
-
-            return new ChatMessage(messageType, content, sender, destination, time);
-        } catch (IOException e) {
+    public ChatMessage deserialize(byte[] bytes) {
+        try {
+            return this.mapper.readValue(bytes, ChatMessage.class);
+        } catch (IOException e){
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

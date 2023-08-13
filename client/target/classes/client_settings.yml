@@ -1,0 +1,6 @@
+register-url:
+  "http://localhost:9001/api/register"
+authenticate-url:
+  "http://localhost:9000/api/authenticate"
+router-url:
+  "ws://localhost:9004/router"
