@@ -31,8 +31,6 @@ public class CustomBinaryWebSocketHandler extends BinaryWebSocketHandler {
 
     @Override
     protected void handleBinaryMessage(@NonNull WebSocketSession session, @NonNull BinaryMessage binMessage) throws Exception {
-        String userId = (String) session.getAttributes().get("userId");
-        logger.info("Message received from {}", userId);
         ByteBuffer buffer = binMessage.getPayload();
         byte[] message = new byte[binMessage.getPayloadLength()];
         buffer.get(message);

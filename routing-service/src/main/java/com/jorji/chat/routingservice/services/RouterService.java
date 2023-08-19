@@ -49,7 +49,6 @@ public class RouterService {
     }
 
     public void scheduleDelayedMessage(byte[] message) {
-        logger.info("A message was delayed!");
         // todo
     }
 
@@ -57,7 +56,6 @@ public class RouterService {
     public void receiveRabbitMessage(byte[] message) {
         try {
             ChatMessage chatMessage = serializationService.deserialize(message, ChatMessage.class);
-            logger.info("Msg route {} -> {}", chatMessage.getSender(), chatMessage.getDestination());
             WebSocketSession session = sessionMap.get(chatMessage.getDestination());
 
             if (session == null) {

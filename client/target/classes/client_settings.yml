@@ -4,3 +4,7 @@ authenticate-url:
   "http://localhost:9000/api/authenticate"
 router-url:
   "ws://localhost:9004/router"
+message-count:
+  40000
+client-count:
+  3

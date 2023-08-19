@@ -4,23 +4,23 @@ Configuration:
   properties:
     property:
       name: filename
-      value: target/test-yaml.log
+      value: client_run.log
   thresholdFilter:
-    level: debug
+    level: info
   appenders:
     Console:
       name: STDOUT
       target: SYSTEM_OUT
       PatternLayout:
-        Pattern: "%m%n"
+        Pattern: "%d{HH:mm:ss.SSS} [%highlight{%p}] [%t] %m%n"
     File:
       name: File
       fileName: ${filename}
       PatternLayout:
-        Pattern: "%d %p %C{1.} [%t] %m%n"
+        Pattern: "%d{HH:mm:ss.SSS} [%p] [%t] %m%n"
       Filters:
         ThresholdFilter:
-          level: error
+          level: info
 
   Loggers:
     Root:

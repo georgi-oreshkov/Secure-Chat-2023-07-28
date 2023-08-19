@@ -3,7 +3,7 @@ package com.jorji.chat.client.model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.jorji.chat.client.Main;
+import com.jorji.chat.client.ClientThread;
 import org.msgpack.jackson.dataformat.MessagePackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ChatMessageSerializer {
     private final ObjectMapper mapper;
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClientThread.class);
 
 
     public ChatMessageSerializer() {
