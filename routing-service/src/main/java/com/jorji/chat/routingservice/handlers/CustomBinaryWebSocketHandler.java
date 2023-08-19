@@ -1,5 +1,6 @@
 package com.jorji.chat.routingservice.handlers;
 
+import com.jorji.chat.routingservice.model.User;
 import com.jorji.chat.routingservice.services.RouterService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -17,16 +18,16 @@ import java.util.AbstractMap;
 @Component
 @AllArgsConstructor
 public class CustomBinaryWebSocketHandler extends BinaryWebSocketHandler {
-    private final AbstractMap<String, WebSocketSession> sessionMap;
+    private final AbstractMap<User, WebSocketSession> sessionMap;
     private final RouterService routerService;
     private static final Logger logger = LoggerFactory.getLogger(CustomBinaryWebSocketHandler.class);
 
 
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) {
-        String userId = (String) session.getAttributes().get("userId");
-        logger.info("Connection established for " + userId);
-        this.sessionMap.put(userId, session);
+        User user = (User) session.getAttributes().get("user");
+        logger.info("Connection established for " + user);
+        this.sessionMap.put(user, session);
     }
 
     @Override
@@ -45,10 +46,10 @@ public class CustomBinaryWebSocketHandler extends BinaryWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus status) {
-        String userId = (String) session.getAttributes().get("userId");
-        logger.info("Connection closed for {}", userId);
-        if (!sessionMap.remove(userId, session))
-            throw new RuntimeException("Session " + userId + " removal failed!");
+        User user = (User) session.getAttributes().get("user");
+        logger.info("Connection closed for {}", user);
+        if (!sessionMap.remove(user, session))
+            throw new RuntimeException("Session " + user.getUuid() + " removal failed!");
     }
 
     @Override

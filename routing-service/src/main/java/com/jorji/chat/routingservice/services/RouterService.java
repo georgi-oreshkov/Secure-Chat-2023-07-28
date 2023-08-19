@@ -30,8 +30,10 @@ public class RouterService {
 
     private final AbstractMap<String, WebSocketSession> sessionMap;
 
+    private final AbstractMap<String, String> usernameMap;
 
-    public void sendMessage(byte[] message) throws IOException {
+
+    public void sendRabbitMessage(byte[] message) throws IOException {
         ChatMessage chatMessage = serializationService.deserialize(message, ChatMessage.class);
         Message amqpMessage = MessageBuilder
                 .withBody(message)
@@ -53,7 +55,12 @@ public class RouterService {
     }
 
     @RabbitListener(queues = "${com.jorji.chat.amqp.direct-message-queue-name}")
-    public void receiveRabbitMessage(byte[] message) {
+    public void receiveRabbitMessage(byte[] message){
+        sendMessage(message);
+    }
+
+
+    public void sendMessage(byte[] message) {
         try {
             ChatMessage chatMessage = serializationService.deserialize(message, ChatMessage.class);
             WebSocketSession session = sessionMap.get(chatMessage.getDestination());

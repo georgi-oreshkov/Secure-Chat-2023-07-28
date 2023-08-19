@@ -1,11 +1,13 @@
 package com.jorji.chat.routingservice;
 
+import com.jorji.chat.routingservice.model.User;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.AbstractMap;
@@ -20,8 +22,13 @@ public class RoutingServiceApplication {
 		SpringApplication.run(RoutingServiceApplication.class, args);
 	}
 
-	@Bean
-	public AbstractMap<String, WebSocketSession> getSessionMap(){
+	@Bean(name = "sessionMap")
+	public AbstractMap<User, WebSocketSession> getSessionMap(){
 		return new ConcurrentHashMap<>();
+	}
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 }
