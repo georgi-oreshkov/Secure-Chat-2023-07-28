@@ -11,10 +11,11 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>amqp-user-id-resolver-service</module>
+<!--        <module>amqp-user-id-resolver-service</module>-->
         <module>authentication-service</module>
         <module>routing-service</module>
         <module>user-management-service</module>
+        <module>user-resolver</module>
         <module>message-util</module>
         <module>user-util</module>
     </modules>

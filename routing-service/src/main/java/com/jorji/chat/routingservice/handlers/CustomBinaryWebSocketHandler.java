@@ -2,6 +2,7 @@ package com.jorji.chat.routingservice.handlers;
 
 import com.jorji.chat.routingservice.model.User;
 import com.jorji.chat.routingservice.services.RouterService;
+import com.jorji.chatutil.userutil.model.ResolverUserModel;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,18 +15,19 @@ import org.springframework.web.socket.handler.BinaryWebSocketHandler;
 
 import java.nio.ByteBuffer;
 import java.util.AbstractMap;
+import java.util.UUID;
 
 @Component
 @AllArgsConstructor
 public class CustomBinaryWebSocketHandler extends BinaryWebSocketHandler {
-    private final AbstractMap<User, WebSocketSession> sessionMap;
+    private final AbstractMap<UUID, WebSocketSession> sessionMap;
     private final RouterService routerService;
     private static final Logger logger = LoggerFactory.getLogger(CustomBinaryWebSocketHandler.class);
 
 
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) {
-        User user = (User) session.getAttributes().get("user");
+        ResolverUserModel user = (ResolverUserModel) session.getAttributes().get("user");
         logger.info("Connection established for " + user);
         this.sessionMap.put(user, session);
     }

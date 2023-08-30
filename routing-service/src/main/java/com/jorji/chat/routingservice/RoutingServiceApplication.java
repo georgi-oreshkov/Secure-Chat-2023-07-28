@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.AbstractMap;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @SpringBootApplication
@@ -23,7 +24,7 @@ public class RoutingServiceApplication {
 	}
 
 	@Bean(name = "sessionMap")
-	public AbstractMap<User, WebSocketSession> getSessionMap(){
+	public AbstractMap<UUID, WebSocketSession> getSessionMap(){
 		return new ConcurrentHashMap<>();
 	}
 
