@@ -3,7 +3,7 @@ package com.jorji.chat.usermanagementservice.services;
 import com.jorji.chat.usermanagementservice.model.RegisterRequest;
 import com.jorji.chat.usermanagementservice.model.RegisterResponse;
 import com.jorji.chat.usermanagementservice.repositories.FullUserRepository;
-import com.jorji.chatutil.userutil.model.FullUserModel;
+import com.jorji.chatutil.userutil.model.FullUser;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class UserManagementService {
     public RegisterResponse registerUser(RegisterRequest registerRequest) throws KeyAlreadyExistsException {
         if (repository.existsByUsername(registerRequest.getUsername())) throw new KeyAlreadyExistsException();
         String contactId = hashingService.generateContactId();
-        FullUserModel user = hashingService.getUserBuilderWithPass(registerRequest.getPassword().getBytes())
+        FullUser user = hashingService.getUserBuilderWithPass(registerRequest.getPassword().getBytes())
                 .uuid(UUID.randomUUID())
                 .username(registerRequest.getUsername())
                 .contactId(contactId)

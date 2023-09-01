@@ -17,6 +17,8 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.AbstractMap;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -28,50 +30,72 @@ public class RouterService {
 
     private final AmqpProperties amqpProperties;
 
-    private final AbstractMap<String, WebSocketSession> sessionMap;
+    private final AbstractMap<UUID, WebSocketSession> sessionMap;
 
-    private final AbstractMap<String, String> usernameMap;
+    private final UserResolverService resolverService;
 
 
-    public void sendRabbitMessage(byte[] message) throws IOException {
+
+    public void handleMessage(byte[] message) throws IOException {
         ChatMessage chatMessage = serializationService.deserialize(message, ChatMessage.class);
-        Message amqpMessage = MessageBuilder
-                .withBody(message)
-                .build();
-        String queueName;
         MessageType type = chatMessage.getType();
+
         switch (type) {
-            case CHAT -> queueName = amqpProperties.getUserResolutionQueueName();
-            case CHAT_GROUP -> queueName = amqpProperties.getGroupResolutionQueueName();
-            case CHAT_PRIVATE -> queueName = amqpProperties.getContactResolutionQueueName();
+            case CHAT -> {
+                try {
+                    chatMessage = resolverService.resolveDestUsername(chatMessage);
+                    sendMessage(chatMessage);
+                } catch (NoSuchElementException e){
+                    scheduleDelayedMessage(chatMessage);
+                }
+
+            }
+            case CHAT_PRIVATE -> {
+                try {
+                    chatMessage = resolverService.resolveDestContactId(chatMessage);
+                    sendMessage(chatMessage);
+                } catch (NoSuchElementException e){
+                    scheduleDelayedMessage(chatMessage);
+                }
+            }
+            case CHAT_GROUP -> {
+                String queueName = amqpProperties.getGroupResolutionQueueName();
+                Message amqpMessage = MessageBuilder
+                        .withBody(message)
+                        .build();
+                logger.info("Sending message to `{}`", queueName);
+                rabbitTemplate.send(queueName, amqpMessage);
+            }
             default -> throw new IllegalArgumentException("Message type: " + type + "is illegal.");
         }
-        logger.info("Sending message to `{}`", queueName);
-        rabbitTemplate.send(queueName, amqpMessage);
     }
 
-    public void scheduleDelayedMessage(byte[] message) {
+    public void scheduleDelayedMessage(ChatMessage message) {
         // todo
     }
 
     @RabbitListener(queues = "${com.jorji.chat.amqp.direct-message-queue-name}")
-    public void receiveRabbitMessage(byte[] message){
-        sendMessage(message);
+    public void receiveRabbitMessage(byte[] message) throws IOException {
+        ChatMessage chatMessage = serializationService.deserialize(message, ChatMessage.class);
+        sendMessage(chatMessage);
     }
 
 
-    public void sendMessage(byte[] message) {
+    public void sendMessage(ChatMessage message) {
         try {
-            ChatMessage chatMessage = serializationService.deserialize(message, ChatMessage.class);
-            WebSocketSession session = sessionMap.get(chatMessage.getDestination());
+            WebSocketSession session = sessionMap.get(
+                    UUID.fromString(message.getDestination()));
 
             if (session == null) {
                 scheduleDelayedMessage(message);
                 return;
             }
 
-            BinaryMessage binaryMessage = new BinaryMessage(message);
-            session.sendMessage(binaryMessage);
+            BinaryMessage binaryMessage = new BinaryMessage(serializationService.serialize(message));
+
+            synchronized (session) {
+                session.sendMessage(binaryMessage);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

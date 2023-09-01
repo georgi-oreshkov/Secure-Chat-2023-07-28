@@ -15,7 +15,6 @@ public class UserUtilsService {
     public UserUtilsService() {
         MessagePackFactory factory = new MessagePackFactory();
         this.objectMapper = new ObjectMapper(factory);
-
     }
 
     public byte[] serialize(UUID uuid) throws IOException {

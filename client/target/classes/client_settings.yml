@@ -5,6 +5,6 @@ authenticate-url:
 router-url:
   "ws://localhost:9004/router"
 message-count:
-  40000
+  20
 client-count:
-  3
+  1000

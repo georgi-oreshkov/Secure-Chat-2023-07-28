@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
@@ -21,31 +22,40 @@ public class ClientThread implements Runnable {
     private final String instanceName;
     public static final Object obj_lock = new Object();
 
-    private final Map<String, Object> properties;
+    private final Integer msgCount;
+    private final Integer clientCount;
+
+    private final SCBinaryWebsocketClient client;
 
     public ClientThread(Map<String, Object> properties, int instId) throws FileNotFoundException {
-        this.properties = properties;
-        this.instanceName = "javaPerfAnalyzer-"+ instId;
-    }
+        this.instanceName = "javaPerfAnalyzer-" + instId;
 
-    @Override
-    public void run() {
         try {
             URL authUrl = URI.create((String) properties.get("authenticate-url")).toURL();
             String uuid = authenticateAndGetUUID(authUrl);
             Map<String, String> headers = new HashMap<>();
             headers.put("X-User-Id", uuid);
-            Integer msgCount = (Integer) properties.get("message-count");
-            Integer clientCount = (Integer) properties.get("client-count");
 
+            this.msgCount = (Integer) properties.get("message-count");
+            this.clientCount = (Integer) properties.get("client-count");
 
-            SCBinaryWebsocketClient client = new SCBinaryWebsocketClient(
+            this.client = new SCBinaryWebsocketClient(
                     URI.create((String) properties.get("router-url")),
                     headers,
                     msgCount * clientCount);
-            client.connectBlocking(10, TimeUnit.SECONDS);
-            logger.info("State: {}", client.getReadyState());
+            this.client.connectBlocking(10, TimeUnit.SECONDS);
+            logger.info("State: {}", this.client.getReadyState());
 
+
+        } catch (MalformedURLException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void run() {
+        try {
             for (int i = 0; i < msgCount; i++) {
                 for (int j = 0; j < clientCount; j++) {
                     ChatMessage chatMessage = new ChatMessage(
@@ -59,7 +69,7 @@ public class ClientThread implements Runnable {
                 obj_lock.wait();
             }
             client.close();
-        } catch (IOException | InterruptedException e) {
+        } catch (InterruptedException e) {
             logger.error(e.getMessage());
             throw new RuntimeException(e);
         }

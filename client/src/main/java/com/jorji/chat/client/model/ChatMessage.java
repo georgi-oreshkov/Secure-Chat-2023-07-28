@@ -16,14 +16,6 @@ public class ChatMessage {
     private String destination;
     private Long time;
 
-    public String toLogString(){
-        return String.format("at:%d,of-type:%s,sender:%s,content-length:%d",
-                time,
-                type,
-                sender,
-                content.length());
-    }
-
     public ChatMessage(String content, String sender, String destination) {
         this.content = content;
         this.sender = sender;

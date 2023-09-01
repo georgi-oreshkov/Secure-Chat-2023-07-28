@@ -34,7 +34,7 @@ public class Main {
 
             Integer clientCount = (Integer) properties.get("client-count");
             Thread[] threads = new Thread[clientCount];
-            long time = System.currentTimeMillis();
+
             for (int i = 0; i < clientCount; i++) {
                 ClientThread clientThread = new ClientThread(properties, i);
                 URL registerUrl = URI.create((String) properties.get("register-url")).toURL();
@@ -44,9 +44,9 @@ public class Main {
                 Thread.sleep(20);
             }
 
+            long time = System.currentTimeMillis();
             for (Thread thread : threads) {
                 thread.start();
-                Thread.sleep(20);
             }
 
             logger.info("Main method is waiting for all threads to complete...");

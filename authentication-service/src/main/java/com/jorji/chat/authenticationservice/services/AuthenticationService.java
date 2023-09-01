@@ -2,7 +2,7 @@ package com.jorji.chat.authenticationservice.services;
 
 
 import com.jorji.chat.authenticationservice.repositories.AuthUserRepository;
-import com.jorji.chatutil.userutil.model.FullUserModel;
+import com.jorji.chatutil.userutil.model.FullUser;
 import com.jorji.chatutil.userutil.services.UserUtilsService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -25,12 +25,16 @@ public class AuthenticationService {
 
     public byte[] authenticate(String username, byte[] password) throws NoSuchElementException, AuthenticationException, IOException {
         logger.info("Authenticating for " + username + " with password: " + Base64.getEncoder().encodeToString(password));
-        FullUserModel user = repository.getUserByUsername(username);
+        FullUser user = repository.getUserByUsername(username);
+
         if (user == null) {
             logger.info("Couldn't find user.");
             throw new NoSuchElementException();
         }
-        logger.info("User found. Verifying password.");
+        logger.info("User found. Username: {}, Pass: {}, Salt: {}",
+                user.getUsername(),
+                user.getPassword(),
+                user.getSalt());
 
         boolean verified = hashingService.verify(
                 user.getPasswordBytes(),

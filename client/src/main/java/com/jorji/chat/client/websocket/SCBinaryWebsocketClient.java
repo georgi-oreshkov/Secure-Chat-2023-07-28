@@ -25,7 +25,7 @@ public class SCBinaryWebsocketClient extends WebSocketClient {
 
     long fMessage;
 
-    Integer expected;
+    final Integer expected;
 
     public SCBinaryWebsocketClient(URI uri, Map<String, String> headers, Integer expectedMsg) {
         super(uri, new Draft_6455(), headers);
@@ -81,7 +81,7 @@ public class SCBinaryWebsocketClient extends WebSocketClient {
     }
 
 
-    public void sendMessage(ChatMessage chatMessage) {
+    public void sendMessage(ChatMessage chatMessage) throws InterruptedException {
         logger.info("Sending message.");
         byte[] message = serializer.serialize(chatMessage);
         ByteBuffer buffer = ByteBuffer.wrap(message);

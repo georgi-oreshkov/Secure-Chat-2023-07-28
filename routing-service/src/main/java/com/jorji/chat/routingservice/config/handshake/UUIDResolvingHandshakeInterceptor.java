@@ -1,6 +1,7 @@
 package com.jorji.chat.routingservice.config.handshake;
 
-import com.jorji.chatutil.userutil.model.ResolverUserModel;
+import com.jorji.chat.routingservice.config.UserResolverServiceProperties;
+import com.jorji.chatutil.userutil.model.SlimUser;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +22,7 @@ import java.util.NoSuchElementException;
 @AllArgsConstructor
 public class UUIDResolvingHandshakeInterceptor implements HandshakeInterceptor {
     private final RestTemplate template;
+    private final UserResolverServiceProperties resolverServiceProperties;
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, @NonNull ServerHttpResponse response,
@@ -37,15 +39,17 @@ public class UUIDResolvingHandshakeInterceptor implements HandshakeInterceptor {
         // You can perform post-processing here after the handshake is successful.
     }
 
-    private ResolverUserModel fetchUser(String uuid) {
+    private SlimUser fetchUser(String uuid) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-User-Id", uuid);
 
-        ResponseEntity<ResolverUserModel> response = template.exchange(
-                "https://api.example.com/some/endpoint",
+        ResponseEntity<SlimUser> response = template.exchange(
+                resolverServiceProperties.getHost() +
+                ":" + resolverServiceProperties.getPort() +
+                resolverServiceProperties.getApiPath(),
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                ResolverUserModel.class
+                SlimUser.class
         );
 
         if (!response.getStatusCode().is2xxSuccessful())

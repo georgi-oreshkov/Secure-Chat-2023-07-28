@@ -29,8 +29,8 @@ public class HashingService {
         bytesGenerator.generateBytes(password, newHash);
         logger.info("Password: " + Base64.getEncoder().encodeToString(password));
         logger.info("Salt:" + Base64.getEncoder().encodeToString(salt));
-        logger.info("Old hash" + Base64.getEncoder().encodeToString(hash));
-        logger.info("New hash" + Base64.getEncoder().encodeToString(newHash));
+        logger.info("Old hash: " + Base64.getEncoder().encodeToString(hash));
+        logger.info("New hash: " + Base64.getEncoder().encodeToString(newHash));
         return Arrays.equals(hash, newHash);
     }
 }

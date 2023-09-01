@@ -27,6 +27,14 @@ services:
     networks:
       - secure-chat-net
 
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - secure-chat-net
+
   authentication-service:
     container_name: 'authentication-service'
     image: gocheto8/jorji:authentication-service
@@ -47,18 +55,6 @@ services:
     depends_on:
       - mongodb
 
-  amqp-user-id-resolver-service:
-    container_name: 'amqp-user-id-resolver-service'
-    image: gocheto8/jorji:amqp-user-id-resolver-service
-    ports:
-      - '9003:8080'
-    networks:
-      - secure-chat-net
-    depends_on:
-      - mongodb
-      - rabbitmq
-      - routing-service
-
   routing-service:
     container_name: 'routing-service'
     image: gocheto8/jorji:routing-service
@@ -69,6 +65,17 @@ services:
     depends_on:
       - mongodb
       - rabbitmq
+
+  user-resolver-service:
+    container_name: 'user-resolver-service'
+    image: gocheto8/jorji:user-resolver-service
+    ports:
+      - '9005:8080'
+    networks:
+      - secure-chat-net
+    depends_on:
+      - mongodb
+
 
 volumes:
   mongodb_data_container:
